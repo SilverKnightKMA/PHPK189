@@ -175,7 +175,12 @@ $row = mysqli_fetch_array($query);
             ?>
         </div>
     </div>
-    <?php echo $list_pages;} ?>
+    <div id="pagination">
+        <ul class="pagination">
+        <?php echo $list_pages;} ?>
+        </ul>
+    </div>
+    
     <!--	End Comments List	-->
 </div>
 <!--	End Product	-->
