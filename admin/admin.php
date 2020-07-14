@@ -63,6 +63,8 @@ if(!defined("TEMPLATE")){
 			<li><a href="?page_layout=category"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>Quản lý danh mục</a></li>
 			<li><a href="?page_layout=product"><svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>Quản lý sản phẩm</a></li>
 			<li><a href="?page_layout=comment"><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg> Quản lý bình luận</a></li>
+			<li><a href="?page_layout=rep_comment"><svg class="glyph stroked flag"><use xlink:href="#stroked-flag"/></svg> Quản lý từ khoá xấu</a></li>
+			<li><a href="?page_layout=config_mailserver"><svg class="glyph stroked email"><use xlink:href="#stroked-email "/></svg> Quản lý Mail Server</a></li>
 			<li><a href="?page_layout=ads"><svg class="glyph stroked chain"><use xlink:href="#stroked-chain"/></svg> Quản lý quảng cáo</a></li>
 			<li><a href="?page_layout=setting"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"/></svg> Cấu hình</a></li>
 		</ul>
@@ -82,6 +84,15 @@ if(!defined("TEMPLATE")){
 				case"product": include_once("product.php"); break;
 				case"del_product": include_once("del_product.php"); break;
 				case"dashboard": include_once("dashboard.php"); break;
+				case 'add_comment': include_once('add_comment.php');break;
+				case 'edit_comment': include_once('edit_comment.php');break;
+				case 'scan_comment': include_once('scan_comment.php');break;
+				case "edit_keyword": include_once("edit_keyword.php"); break;
+				case"add_keyword": include_once("add_keyword.php"); break;
+				case"del_keyword": include_once("del_keyword.php"); break;
+				case 'comment': include_once('comment.php');break;
+				case 'rep_comment': include_once('rep_comment.php');break;
+				case 'config_mailserver' : include_once('config_mailserver.php');break;
 			}
 		}
 		else{
