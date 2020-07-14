@@ -17,8 +17,11 @@ session_start();
     <link rel="stylesheet" href="css/product.css">
     <link rel="stylesheet" href="css/search.css">
     <link rel="stylesheet" href="css/success.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/rating.css">
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/bootstrap.js"></script>
+    
 </head>
 
 <body>

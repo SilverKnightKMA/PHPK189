@@ -38,6 +38,56 @@ $row = mysqli_fetch_array($query);
         <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Đánh giá về <?php echo $row['prd_name']; ?></h3>
             <?php echo $row['prd_details']; ?>
+            <br>
+            <h3>Đánh giá của bạn</h3>
+            <?php
+            $select_rating = mysqli_query($conn, "select rate from rating_prd WHERE prd_id = $prd_id ");
+            $total = mysqli_num_rows($select_rating);
+            if ($total == 0) {
+            ?>
+                <p>Chưa có lượt đánh giá nào</p>
+                <form method="post" action="modules/product/insert_star.php?prd_id=<?php echo $prd_id; ?>">
+                    <div class="rating-box">
+                        <div class="ratings">
+                            <span class="fa fa-star-o"></span>
+                            <span class="fa fa-star-o"></span>
+                            <span class="fa fa-star-o"></span>
+                            <span class="fa fa-star-o"></span>
+                            <span class="fa fa-star-o"></span>
+                        </div>
+                        <input type="hidden" name="rating" id="rating-value" value="">
+                        <input type="submit" value="Đánh giá" name="submit_rating">
+                    <?php } else {
+                    while ($row = mysqli_fetch_array($select_rating)) {
+                        $rate[] = $row['rate'];
+                    }
+                    $total_rate = round((array_sum($rate) / $total), 2);
+                    ?>
+                        <p>Trung bình đánh giá : (<?php echo $total_rate; ?>)</p>
+                        <p id="total_votes">Số lượt đánh giá :<?php echo $total; ?></p>
+                        <form method="post" action="modules/product/insert_star.php?prd_id=<?php echo $prd_id; ?>">
+                            <div class="rating-box">
+                                <div class="ratings">
+                                    <?php
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        if ($i <= $total_rate) {
+                                    ?>
+                                            <span class="fa fa-star"></span>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <span class="fa fa-star-o"></span>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+
+                                </div>
+                                <input type="hidden" name="rating" id="rating-value" value="">
+                                <input type="submit" value="Đánh giá" name="submit_rating">
+                            <?php } ?>
+                            </div>
+                        </form>
         </div>
     </div>
 
@@ -129,3 +179,37 @@ $row = mysqli_fetch_array($query);
     <!--	End Comments List	-->
 </div>
 <!--	End Product	-->
+<script>
+        const stars = document.querySelector(".ratings").children;
+        const ratingValue = document.querySelector("#rating-value");
+        let index;
+
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].addEventListener("mouseover", function() {
+                // console.log(i)
+                for (let j = 0; j < stars.length; j++) {
+                    stars[j].classList.remove("fa-star");
+                    stars[j].classList.add("fa-star-o");
+                }
+                for (let j = 0; j <= i; j++) {
+                    stars[j].classList.remove("fa-star-o");
+                    stars[j].classList.add("fa-star");
+                }
+            })
+            stars[i].addEventListener("click", function() {
+                ratingValue.value = i + 1;
+                index = i;
+            })
+            stars[i].addEventListener("mouseout", function() {
+
+                for (let j = 0; j < stars.length; j++) {
+                    stars[j].classList.remove("fa-star");
+                    stars[j].classList.add("fa-star-o");
+                }
+                for (let j = 0; j <= index; j++) {
+                    stars[j].classList.remove("fa-star-o");
+                    stars[j].classList.add("fa-star");
+                }
+            })
+        }
+    </script>
