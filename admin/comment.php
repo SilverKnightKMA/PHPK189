@@ -21,7 +21,7 @@ if (!defined("TEMPLATE")) {
     </div>
     <!--/.row-->
     <div id="toolbar" class="btn-group">
-        <a href="index.php?page_layout=add_comment" class="btn btn-success">
+        <a href="index.php?page_layout=add_comment" role="button" class="btn btn-success">
             <i class="glyphicon glyphicon-plus"></i> Thêm bình luận
         </a>
     </div>
@@ -52,7 +52,7 @@ if (!defined("TEMPLATE")) {
                             } else {
                                 $page = 1;
                             }
-                            $rows_per_page = 3;
+                            $rows_per_page = 10;
                             $per_row = $page * $rows_per_page - $rows_per_page;
                             $total_rows = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM comment"));
                             $total_pages = ceil($total_rows / $rows_per_page);
@@ -75,7 +75,6 @@ if (!defined("TEMPLATE")) {
                             }
                             $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=comment&page=' . $page_next . '">&raquo;</a></li>';
                             $list_pages .= '</ul>';
-                            echo $list_pages;
 
                             $sql = "SELECT * FROM comment
                                     INNER JOIN product
@@ -87,7 +86,7 @@ if (!defined("TEMPLATE")) {
                             ?>
                                 <tr>
                                     <td style=""><?php echo $row["comm_id"]; ?></td>
-                                    <td style="text-align: center" ><?php echo $row["prd_name"]; ?></br>  <img width="130" height="180" src="img/products/<?php echo $row["prd_image"]; ?>" /></td>
+                                    <td style="text-align: center" ><?php echo $row["prd_name"]; ?></td>
                                     <td style=""><?php echo $row["comm_name"]; ?></td>
                                     <td style=""><?php echo $row["comm_date"]; ?></td>
                                     <td style=""><?php echo $row["comm_mail"]; ?></td>

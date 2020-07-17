@@ -98,7 +98,7 @@ function buyNow() {
                         <tr>
                             <td width="70%">'.$row["prd_name"].'</td>
                             <td width="10%">'.$_SESSION["cart"][$row["prd_id"]].'</td>
-                            <td width="20%">'.formatPrice($row['prd_price']).' đ</td>
+                            <td width="20%">'.formatPrice($total_price_id).' đ</td>
                         </tr>';
                     };
                     $str_body .= '

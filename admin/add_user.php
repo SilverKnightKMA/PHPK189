@@ -27,14 +27,14 @@ if (!defined("TEMPLATE")) {
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="col-md-8">
-					<?php 
-                            if(isset($_POST["sbm"])){
-                                $user_full=$_POST["user_full"];
-                                $user_mail=$_POST["user_mail"];
-                                $user_pass=$_POST["user_pass"];
-                                $user_re_pass=$_POST["user_re_pass"];
-                                $user_level=$_POST["user_level"];
-                                $sql= "INSERT INTO user(
+						<?php
+						if (isset($_POST["sbm"])) {
+							$user_full = $_POST["user_full"];
+							$user_mail = $_POST["user_mail"];
+							$user_pass = $_POST["user_pass"];
+							$user_re_pass = $_POST["user_re_pass"];
+							$user_level = $_POST["user_level"];
+							$sql = "INSERT INTO user(
                                     user_full,
                                     user_mail,
                                     user_pass,
@@ -46,26 +46,23 @@ if (!defined("TEMPLATE")) {
                                     '$user_level')
                                 
                                 ";
-                                if($user_pass === $user_re_pass ){
-                                    $query = mysqli_query($conn,$sql);   
-                                    if(isset($query) && $query === true  ){
-                                        header("location:index.php?page_layout=user");
-                                    }
-                                    else{
-                                        // $err = mysqli_error($conn);
-                                        echo ' <div class="alert alert-danger">Email đã tồn tại !</div>';
+							if ($user_pass === $user_re_pass) {
+								$query = mysqli_query($conn, $sql);
+								if (isset($query) && $query === true) {
+									header("location:index.php?page_layout=user");
+								} else {
+									// $err = mysqli_error($conn);
+									echo ' <div class="alert alert-danger">Email đã tồn tại !</div>';
+								}
+							} else {
+								echo  '<div class="alert alert-danger">Mật khẩu không trùng khớp !</div>';
+							}
+							// $query = mysqli_query($conn,$sql);
 
-                                    }                                
-                                }
-                                else{
-                                    echo  '<div class="alert alert-danger">Mật khẩu không trùng khớp !</div>';
-                                }
-                                // $query = mysqli_query($conn,$sql);
-                                
-                               
-                            }
-                                // <div class="alert alert-danger">Email đã tồn tại !</div>
-                                ?>
+
+						}
+						// <div class="alert alert-danger">Email đã tồn tại !</div>
+						?>
 						<!-- <div class="alert alert-danger">Email đã tồn tại !</div> -->
 						<form role="form" method="post">
 							<div class="form-group">
