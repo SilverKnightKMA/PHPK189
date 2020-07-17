@@ -167,7 +167,7 @@ $row = mysqli_fetch_array($query);
                 <ul>
                     <li><b><?php echo $row_cmt['comm_name'];?></b></li>
                     <li><?php echo $row_cmt['comm_date'];?></li>
-                    <li><?php echo $row_cmt['comm_details'];?></li>
+                    <li><?php echo filter($row_cmt['comm_details']);?></li>
                 </ul>
             </div>
             <?php
