@@ -12,7 +12,7 @@
         $str_type = strtolower(substr($prd_type , -3 , 3))  ;
         $prd_image = $_FILES["prd_image"]["name"] ;
         $prd_tmp_name = $_FILES["prd_image"]["tmp_name"] ;
-        $array_type = array("img" , "png");
+        $array_type = array("jpg" , "png");
         if (in_array($str_type , $array_type) == true) {
             move_uploaded_file($prd_tmp_name , "img/products/".$prd_image) ;
             // end upload file
