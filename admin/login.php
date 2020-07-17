@@ -81,14 +81,26 @@
 							<hr>
 							<div class="g-signin2" data-onsuccess="onSignIn"></div>
 							<script>
+								function fetchEmail(email) {
+									return new Promise(resolve => {
+										fetch('index.php', {
+												method: 'POST',
+												credentials: 'include',
+												headers: {
+													'Content-Type': 'application/x-www-form-urlencoded'
+												},
+												body: `email=${email}`
+											})
+											.then(resolve)
+									})
+								}
+
 								function onSignIn(googleUser) {
+
 									var profile = googleUser.getBasicProfile();
 									var email = profile.getEmail();
-									var xhr = new XMLHttpRequest();
-									xhr.open('POST', 'index.php');
-									xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-									xhr.send('email=' + email);
-									window.location.href = "index.php";
+									fetchEmail(email)
+										.then(() => window.location.href = "index.php")
 								}
 							</script>
 						</fieldset>
