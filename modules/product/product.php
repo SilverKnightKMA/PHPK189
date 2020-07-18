@@ -29,7 +29,11 @@ $row = mysqli_fetch_array($query);
                 <li><span>Khuyến Mại:</span> <?php echo $row['prd_promotion']; ?></li>
                 <li id="price">Giá Bán (chưa bao gồm VAT)</li>
                 <li id="price-number"><?php echo formatPrice($row['prd_price']); ?> đ</li>
-                <li id="status" <?php if ($row['prd_status'] == 0) {?> class="text-danger" <?php };?>> <?php if ($row['prd_status'] == 1) { echo 'Còn hàng'; } else {echo 'Hết hàng'; } ?></li>
+                <li id="status" <?php if ($row['prd_status'] == 0) { ?> class="text-danger" <?php }; ?>> <?php if ($row['prd_status'] == 1) {
+                                                                                                                echo 'Còn hàng';
+                                                                                                            } else {
+                                                                                                                echo 'Hết hàng';
+                                                                                                            } ?></li>
             </ul>
             <div id="add-cart"><a href="modules/cart/cart_add.php?prd_id=<?php echo $row['prd_id']; ?>">Mua ngay</a></div>
         </div>
@@ -88,103 +92,117 @@ $row = mysqli_fetch_array($query);
                             <?php } ?>
                             </div>
                         </form>
+                    </div>
         </div>
-    </div>
 
-    <!--	Comment	-->
-    <?php
-    if (isset($_POST["sbm"])){
-    $comm_name = $_POST["comm_name"];
-    $comm_mail = $_POST["comm_mail"];
-    $comm_details = $_POST["comm_details"];
-    date_default_timezone_set("Asia/Bangkok");
-    $comm_date = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO comment (prd_id, comm_name, comm_mail, comm_details, comm_date)
+        <!--	Comment	-->
+        <?php
+        if (isset($_POST["sbm"])) {
+            $comm_name = $_POST["comm_name"];
+            $comm_mail = $_POST["comm_mail"];
+            $comm_details = $_POST["comm_details"];
+            date_default_timezone_set("Asia/Bangkok");
+            $comm_date = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO comment (prd_id, comm_name, comm_mail, comm_details, comm_date)
     VALUES ('$prd_id', '$comm_name', '$comm_mail', '$comm_details', '$comm_date')";
-    $query = mysqli_query($conn, $sql);
-    };
-    ?>
-    <div id="comment" class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <h3>Bình luận sản phẩm</h3>
-            <form method="post">
-                <div class="form-group">
-                    <label>Tên:</label>
-                    <input name="comm_name" required type="text" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input name="comm_mail" required type="email" class="form-control" id="pwd">
-                </div>
-                <div class="form-group">
-                    <label>Nội dung:</label>
-                    <textarea name="comm_details" required rows="8" class="form-control"></textarea>
-                </div>
-                <button type="submit" name="sbm" class="btn btn-primary">Gửi</button>
-            </form>
+            $query = mysqli_query($conn, $sql);
+        };
+        ?>
+        <div id="comment" class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <h3>Bình luận sản phẩm</h3>
+                <form method="post">
+                    <div class="form-group">
+                        <label>Tên:</label>
+                        <input name="comm_name" required type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input name="comm_mail" required type="email" class="form-control" id="pwd">
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung:</label>
+                        <textarea name="comm_details" required rows="8" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" name="sbm" class="btn btn-primary">Gửi</button>
+                </form>
+            </div>
         </div>
-    </div>
-    <!--	End Comment	-->
+        <!--	End Comment	-->
 
-    <!--	Comments List	-->
-    <?php 
-    $rows = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM comment WHERE prd_id = $prd_id"));
-    $rows_per_page = 10;
-    $total_rows = $rows;
-    $total_page = ceil($total_rows / $rows_per_page);
-    $per_row = $page_num * $rows_per_page - $rows_per_page;
-    $sql_cmt = "SELECT * FROM comment
+        <!--	Comments List	-->
+        <?php
+        $rows = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM comment WHERE prd_id = $prd_id"));
+        $rows_per_page = 10;
+        $total_rows = $rows;
+        $total_page = ceil($total_rows / $rows_per_page);
+        $per_row = $page_num * $rows_per_page - $rows_per_page;
+        $sql_cmt = "SELECT * FROM comment
     WHERE prd_id = $prd_id
     ORDER BY comm_date DESC
     LIMIT $per_row, $rows_per_page";
-    $query_cmt = mysqli_query($conn, $sql_cmt);
-    if (!$rows == 0){
-    ?>
-    <div id="comments-list" class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <?php
-            $list_pages = '<nav aria-label="Page navigation example">
-            <ul class="pagination">';
-            $page_prev = $page_num - 1;
-            if ($page_prev == 0) {
-                $page_prev = 1;
-            }
-            $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=product&prd_id=' . $prd_id .'&page_number=' . $page_prev . '">Trước</a></li>';
+        $query_cmt = mysqli_query($conn, $sql_cmt);
+        if (!$rows == 0) {
+        ?>
+            <div id="comments-list" class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <?php
+                    while ($row_cmt = mysqli_fetch_array($query_cmt)) {
+                    ?>
+                        <div class="comment-item">
+                            <ul>
+                                <li><b><?php echo $row_cmt['comm_name']; ?></b></li>
+                                <li><?php echo $row_cmt['comm_date']; ?></li>
+                                <li><?php echo filter($row_cmt['comm_details']); ?></li>
+                            </ul>
+                        </div>
+                    <?php
+                    };
+                    ?>
+                </div>
+            </div>
+            <div id="pagination">
+                <ul class="pagination">
+                    <?php
+                    $list_pages = '<nav aria-label="Page navigation example">
+        <ul class="pagination">';
+                    $page_prev = $page_num - 1;
+                    if ($page_prev == 0) {
+                        $page_prev = 1;
+                    }
+                    $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=product&prd_id=' . $prd_id . '&page_number=' . $page_prev . '">Trước</a></li>';
 
-            for ($i = 1; $i <= $total_page; $i++) {
-                $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=product&prd_id=' . $prd_id .'&page_number=' . $i . '">' . $i . '</a></li>';
-            }
-            $page_next = $page_num  + 1;
-            if ($page_next > $total_page) {
-                $page_next = $total_page;
-            }
-            $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=cproduct&prd_id=' . $prd_id .'&page_number=' . $page_next . '">Sau</a></li>
-                </ul>
-            </nav>';
-            while ($row_cmt = mysqli_fetch_array($query_cmt)){
-            ?>
-            <div class="comment-item">
-                <ul>
-                    <li><b><?php echo $row_cmt['comm_name'];?></b></li>
-                    <li><?php echo $row_cmt['comm_date'];?></li>
-                    <li><?php echo filter($row_cmt['comm_details']);?></li>
+                    for ($i = 1; $i <= $total_page; $i++) {
+                        $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=product&prd_id=' . $prd_id . '&page_number=' . $i . '">' . $i . '</a></li>';
+                    }
+                    $page_next = $page_num  + 1;
+                    if ($page_next > $total_page) {
+                        $page_next = $total_page;
+                    }
+                    $list_pages .= '<li class="page-item"><a class="page-link" href="index.php?page_layout=cproduct&prd_id=' . $prd_id . '&page_number=' . $page_next . '">Sau</a></li>
+            </ul>
+        </nav>';
+                    echo $list_pages; ?>
                 </ul>
             </div>
-            <?php
-            };
-            ?>
-        </div>
+        <?php
+        } else {
+        ?>
+            <div id="comments-list" class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="comment-item">
+                        <div class="alert alert-danger">Sản phẩm này hiện chưa có bình luận nào!</div>
+                    </div>
+                </div>
+            </div>
+        <?php
+        };
+        ?>
+
+        <!--	End Comments List	-->
     </div>
-    <div id="pagination">
-        <ul class="pagination">
-        <?php echo $list_pages;} ?>
-        </ul>
-    </div>
-    
-    <!--	End Comments List	-->
-</div>
-<!--	End Product	-->
-<script>
+    <!--	End Product	-->
+    <script>
         const stars = document.querySelector(".ratings").children;
         const ratingValue = document.querySelector("#rating-value");
         let index;

@@ -2,8 +2,10 @@
     <a class="mt-4 mr-2" href="index.php?page_layout=cart">giỏ hàng</a><span class="mt-3">
         <?php
                                 if(isset($_POST["sbm"])){
-                                    foreach($_POST["qtt"] as $prd_id => $qtt){
-                                        $_SESSION["cart"][$prd_id] = $qtt;
+                                    if(isset($_POST["qtt"])){
+                                        foreach($_POST["qtt"] as $prd_id => $qtt){
+                                            $_SESSION["cart"][$prd_id] = $qtt;
+                                        };
                                     };
                                 };
         if (isset($_SESSION["cart"])) {
