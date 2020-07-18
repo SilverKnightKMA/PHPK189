@@ -94,6 +94,7 @@ function buyNow() {
                         </tr>';
                     $query= mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_array($query)){
+                        $total_price_id = $_SESSION["cart"][$row['prd_id']]*$row['prd_price'];
                         $str_body .= '
                         <tr>
                             <td width="70%">'.$row["prd_name"].'</td>
