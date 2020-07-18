@@ -144,12 +144,13 @@ $row = mysqli_fetch_array($query);
     WHERE prd_id = $prd_id
     ORDER BY comm_date DESC
     LIMIT $per_row, $rows_per_page";
+    $query_cmt = mysqli_query($conn, $sql_cmt);
+    if (!$rows == 0) {
         ?>
             <div id="comments-list" class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <?php
-                    $query_cmt = mysqli_query($conn, $sql_cmt);
-                    if (!$rows == 0) {
+                    
                     while ($row_cmt = mysqli_fetch_array($query_cmt)) {
                     if($row_cmt["comm_status"]==1){
                     ?>
