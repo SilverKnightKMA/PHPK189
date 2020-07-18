@@ -103,8 +103,8 @@ $row = mysqli_fetch_array($query);
             $comm_details = $_POST["comm_details"];
             date_default_timezone_set("Asia/Bangkok");
             $comm_date = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO comment (prd_id, comm_name, comm_mail, comm_details, comm_date)
-    VALUES ('$prd_id', '$comm_name', '$comm_mail', '$comm_details', '$comm_date')";
+            $sql = "INSERT INTO comment(prd_id, comm_name, comm_mail, comm_date, comm_details, comm_status)
+                    VALUES ('$prd_id', '$comm_name', '$comm_mail', '$comm_date', '$comm_details', 0)";
             $query = mysqli_query($conn, $sql);
         };
         ?>
