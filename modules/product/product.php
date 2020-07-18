@@ -123,6 +123,9 @@ $row = mysqli_fetch_array($query);
                     <div class="form-group">
                         <label>Nội dung:</label>
                         <textarea name="comm_details" required rows="8" class="form-control"></textarea>
+                        <script>
+                                CKEDITOR.replace( 'comm_details' );
+                            </script>
                     </div>
                     <button type="submit" name="sbm" class="btn btn-primary">Gửi</button>
                 </form>

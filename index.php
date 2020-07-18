@@ -21,6 +21,7 @@ session_start();
     <link rel="stylesheet" href="css/rating.css">
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="ckeditor/ckeditor.js"></script>
     
 </head>
 
