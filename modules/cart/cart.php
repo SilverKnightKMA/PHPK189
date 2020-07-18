@@ -112,7 +112,9 @@ function buyNow() {
                     echo $str_body;
 
                     ////
-                    
+                    $sql = "SELECT * FROM config_mail";
+                    $query = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_array($query);
                     $mail = new PHPMailer(true);                              // Passing 'true' enables exceptions
                     try {
                         //Server settings
@@ -120,20 +122,20 @@ function buyNow() {
 
                         $mail->SMTPDebug = 2;                                 // Enable verbose debug output
                         $mail->isSMTP();                                      // Set mailer to use SMTP
-                        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+                        $mail->Host = $row['mail_host'];  // Specify main and backup SMTP servers
                         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                        $mail->Username = 'anhnhatdev2504@gmail.com';                 // SMTP username
+                        $mail->Username = $row["mail_username"];                 // SMTP username
                         // $mail->Password = 'vietpr0sh0p';                           // SMTP password
-                        $mail->Password = 'aooetapcleuuisun';                           // SMTP password
-                        $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, 'ssl' also accepted
-                        $mail->Port = 465;                                   // TCP port to connect to
+                        $mail->Password = $row["mail_password"];                           // SMTP password
+                        $mail->SMTPSecure = $row["mail_smtpsecure"];                            // Enable TLS encryption, 'ssl' also accepted
+                        $mail->Port = $row["mail_port"] ;                                   // TCP port to connect to
                     
                         //Recipients
                         $mail->CharSet = 'UTF-8';
-                        $mail->setFrom('quantri.vietproshop@gmail.com', 'Vietpro Mobile Shop');				// Gửi mail tới Mail Server
+                        $mail->setFrom($row["mail_setform"]);				// Gửi mail tới Mail Server
                         $mail->addAddress($email);               // Gửi mail tới mail người nhận
                         //$mail->addReplyTo('ceo.vietpro@gmail.com', 'Information');
-                        $mail->addCC('quantri.vietproshop@gmail.com');
+                        $mail->addCC( $row["mail_addcc"]);
                         //$mail->addBCC('bcc@example.com');
                     
                         //Attachments
@@ -142,9 +144,9 @@ function buyNow() {
                     
                         //Content
                         $mail->isHTML(true);                                  // Set email format to HTML
-                        $mail->Subject = 'Xác nhận đơn hàng từ Vietpro Mobile Shop';
+                        $mail->Subject = $row["mail_subject"];
                         $mail->Body    = $str_body;
-                        $mail->AltBody = 'Mô tả đơn hàng';
+                        $mail->AltBody = $row["mail_altbody"];
                     
                         $mail->send();
                         unset($_SESSION["cart"]);
