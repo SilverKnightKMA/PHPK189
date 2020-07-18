@@ -8,13 +8,12 @@ if (isset($_POST['sbm'])) {
     $prd_promotion = $_POST['prd_promotion'];
     $prd_new = $_POST['prd_new'];
     // upload file
-    $prd_type = $_FILES["prd_image"]["type"];
-    $str_type = strtolower(substr($prd_type, -3, 3));
     $prd_image = $_FILES["prd_image"]["name"];
+    $prd_type = pathinfo($prd_image,PATHINFO_EXTENSION);
     $prd_tmp_name = $_FILES["prd_image"]["tmp_name"];
-    $array_type = array("jpg", "png");
-    if (in_array($str_type, $array_type) == true) {
-        move_uploaded_file($prd_tmp_name, "img/products/" . $prd_image);
+    $array_type = array('jpg', 'png', 'jpeg', 'gif');
+    if (in_array($prd_type, $array_type) == true) {
+        move_uploaded_file($prd_tmp_name, "img/" . $prd_image);
         // end upload file
         // danh muc
         $cat_id = $_POST['cat_id'];
@@ -60,7 +59,7 @@ if (isset($_POST['sbm'])) {
         // sau khi thự thi xong ta chuyển về trang product
         header("location:index.php?page_layout=product");
     } else {
-        $error = "file khong dung dinh dang";
+        $error ="Sai định dạng file!";
     }
 }
 
@@ -123,7 +122,8 @@ if (isset($_POST['sbm'])) {
 
                             <input required name="prd_image" type="file">
                             <br>
-                            <p><?php if (isset($error)) {
+                            <p><?php 
+                            if (isset($error)) {
                                     echo $error;
                                 } ?></p>
                             <div>
