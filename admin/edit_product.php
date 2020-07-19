@@ -175,6 +175,9 @@ if (isset($_POST['sbm'])) {
                         <div class="form-group">
                             <label>Mô tả sản phẩm</label>
                             <textarea name="prd_details" required class="form-control" rows="3"><?php echo $row["prd_details"]; ?></textarea>
+                            <script>
+                                CKEDITOR.replace( 'comm_details' );
+                            </script>
                         </div>
                         <button type="submit" name="sbm" class="btn btn-primary">Cập nhật</button>
                         <button type="reset" class="btn btn-default">Làm mới</button>
